@@ -69,7 +69,8 @@ function applyEventToRoutes(routes: TradeRoute[], event: LiveEvent): TradeRoute[
       (r.destination.toLowerCase().includes(destination.toLowerCase()) ||
         r.origin.toLowerCase().includes(destination.toLowerCase()))
     if (match && origin && destination) {
-      return { ...r, severity: rawSeverity === "success" ? "rerouted" : rawSeverity === "info" ? r.severity : severity, reason: event.summary?.slice(0, 60) || r.reason }
+      const resolvedSeverity: RouteSeverity = rawSeverity === "success" ? "rerouted" : rawSeverity === "info" ? r.severity : severity
+      return { ...r, severity: resolvedSeverity, reason: event.summary?.slice(0, 60) || r.reason }
     }
     return r
   })
