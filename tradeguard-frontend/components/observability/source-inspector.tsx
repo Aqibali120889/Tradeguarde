@@ -1,13 +1,20 @@
 "use client"
 
 import { useObservabilityStore } from "@/stores/observability-store"
-import ReactJson from "react-json-view"
 import { motion } from "framer-motion"
 
 export function SourceInspector() {
-  const selected = useObservabilityStore((s) => s.selectedSourceEvent)
-  // We'll store selectedSourceEvent via a separate selector (to be added to the store later)
-  if (!selected) {
+  const selectedId = useObservabilityStore((s) => s.selectedSourceEventId)
+  const traces = useObservabilityStore((s) => s.traces)
+
+  // Find the selected step's output payload across all traces
+  const selectedPayload = selectedId
+    ? traces
+        .flatMap((t) => t.steps)
+        .find((st) => st.id === selectedId)?.output ?? null
+    : null
+
+  if (!selectedPayload) {
     return (
       <div className="text-muted-foreground text-sm italic">
         Select an event from the Live Event Stream to inspect its raw payload.
@@ -22,7 +29,12 @@ export function SourceInspector() {
       className="rounded-lg bg-[#101A2C] border border-[#2E3846] p-4 overflow-auto max-h-[400px]"
     >
       <h3 className="text-sm font-medium mb-2 text-intelligence">Raw Source Payload</h3>
-      <ReactJson src={selected.payload} name={selected.id} collapsed={2} enableClipboard={false} displayDataTypes={false} style={{ background: "transparent", fontSize: "0.85rem" }} />
+      <pre
+        className="text-[0.85rem] font-mono text-[#A0C8E8] whitespace-pre-wrap break-all leading-relaxed"
+        style={{ background: "transparent" }}
+      >
+        {JSON.stringify(selectedPayload, null, 2)}
+      </pre>
     </motion.div>
   )
 }

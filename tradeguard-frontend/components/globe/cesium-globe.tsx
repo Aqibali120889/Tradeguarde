@@ -82,7 +82,6 @@ export default function CesiumGlobe() {
         navigationHelpButton: false,
         navigationInstructionsInitiallyVisible: false,
         creditContainer: document.createElement("div"),
-        imageryProvider: false as any,
       })
 
       viewerRef.current = viewer

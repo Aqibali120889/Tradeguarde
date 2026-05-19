@@ -60,7 +60,8 @@ function applyEventToRoutes(routes: TradeRoute[], event: LiveEvent): TradeRoute[
   const payload = event.payload as Record<string, string>
   const origin = payload?.origin ?? ""
   const destination = payload?.destination ?? ""
-  const severity = (payload?.severity ?? event.severity) as RouteSeverity
+  const rawSeverity = (payload?.severity ?? event.severity) as string
+  const severity = rawSeverity as RouteSeverity
   return routes.map((r) => {
     const match =
       (r.origin.toLowerCase().includes(origin.toLowerCase()) ||
@@ -68,7 +69,7 @@ function applyEventToRoutes(routes: TradeRoute[], event: LiveEvent): TradeRoute[
       (r.destination.toLowerCase().includes(destination.toLowerCase()) ||
         r.origin.toLowerCase().includes(destination.toLowerCase()))
     if (match && origin && destination) {
-      return { ...r, severity: severity === "success" ? "rerouted" : severity === "info" ? r.severity : severity, reason: event.summary?.slice(0, 60) || r.reason }
+      return { ...r, severity: rawSeverity === "success" ? "rerouted" : rawSeverity === "info" ? r.severity : severity, reason: event.summary?.slice(0, 60) || r.reason }
     }
     return r
   })

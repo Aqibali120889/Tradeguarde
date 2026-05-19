@@ -1,0 +1,9 @@
+﻿Program 'node.exe' failed to run: Exception of type 'System.OutOfMemoryException' was thrown.At line:1 char:1
++ & "D:\node js/node.exe" "D:\node js/node_modules/npm/bin/npx-cli.js"  ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.
+At line:1 char:1
++ & "D:\node js/node.exe" "D:\node js/node_modules/npm/bin/npx-cli.js"  ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ResourceUnavailable: (:) [], ApplicationFailedException
+    + FullyQualifiedErrorId : NativeCommandFailed
+ 

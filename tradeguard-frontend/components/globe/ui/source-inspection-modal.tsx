@@ -81,8 +81,9 @@ export function SourceInspectionModal() {
   if (event.payload?.affected_shipments) {
     reasoningChain.push(`${event.payload.affected_shipments} shipments identified in affected corridors`)
   }
-  if (event.payload?.affected_hs_codes?.length) {
-    reasoningChain.push(`HS codes in scope: ${(event.payload.affected_hs_codes as string[]).join(", ")}`)
+  const affectedHsCodes = Array.isArray(event.payload?.affected_hs_codes) ? (event.payload.affected_hs_codes as string[]) : []
+  if (affectedHsCodes.length) {
+    reasoningChain.push(`HS codes in scope: ${affectedHsCodes.join(", ")}`)
   }
   reasoningChain.push(`Agent [${event.agent}] processed event at confidence ${((event.confidence_score ?? 1) * 100).toFixed(0)}%`)
   reasoningChain.push("Emitting globe update → reroute / sanctions overlay / shockwave propagation")
