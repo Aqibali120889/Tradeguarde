@@ -11,6 +11,10 @@ const cesiumSource = path.join(
 )
 
 const nextConfig: NextConfig = {
+  // Explicitly acknowledge Turbopack so Next.js doesn't error, but our
+  // Webpack config below will still be used for production builds.
+  turbopack: {},
+
   webpack: (config: any, { isServer }: { isServer: boolean }) => {
     if (!isServer) {
       // Tell Cesium where to find static assets at runtime
